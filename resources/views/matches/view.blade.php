@@ -53,9 +53,9 @@
                   </tr>
                   @foreach($player->scores()->get() as $score)
                     <tr>
-                      <td><a href="{{ route('match.view', ['id' => $score->match->id]) }}">Round {{ $score->match->id }}</a></td>
-                      <td>{{ $score->victory_points }}</td>
-                      <td>{{ $score->match->maximum_victory_points }}</td>
+                      <td class="col-md-4"><a href="{{ route('match.view', ['id' => $score->match->id]) }}">Round {{ $score->match->id }}</a></td>
+                      <td class="col-md-4">{{ $score->victory_points }}</td>
+                      <td class="col-md-4">{{ $score->match->maximum_victory_points }}</td>
                     </tr>
                   @endforeach
                 </table>

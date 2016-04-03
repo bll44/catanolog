@@ -9,24 +9,27 @@
                 <div class="panel-heading">Statistics</div>
 
                 <div class="panel-body">
-                  {{-- <div id="myfirstchart" style="height: 250px;"></div> --}}
                   {{-- Most Played --}}
-                  <div class="row">
-                    <div class="col-sm-4 text-center">
-                      <label class="label label-success">Played Most Matches</label>
-                      <div id="most-played" style="min-height: 250px;"></div>
-                    </div>
-
-                    <div class="col-sm-4 text-center">
-                      <label class="label label-success">Average 10 Point Match Score</label>
-                      <div id="average-default-victory-point-score" style="min-height: 250px;"></div>
-                    </div>
-                    {{-- Total Victory Points --}}
-                    <div class="col-sm-4 text-center">
-                      <label class="label label-success">Total Victory Points</label>
-                      <div id="total-victory-points" style="min-height: 250px;"></div>
-                    </div>
-                  </div>
+                    @if ($stats->totalMatches = 0)
+                      None yet! Enter a match first.
+                    @else
+                      <div class="row">
+                        <div class="col-sm-4 text-center">
+                          <label class="label label-success">Played Most Matches</label>
+                          <div id="most-played" style="min-height: 250px;"></div>
+                        </div>
+                        {{-- Average 10 Point Match Score --}}
+                        <div class="col-sm-4 text-center">
+                          <label class="label label-success">Average 10 Point Match Score</label>
+                          <div id="average-default-victory-point-score" style="min-height: 250px;"></div>
+                        </div>
+                        {{-- Total Victory Points --}}
+                        <div class="col-sm-4 text-center">
+                          <label class="label label-success">Total Victory Points</label>
+                          <div id="total-victory-points" style="min-height: 250px;"></div>
+                        </div>
+                      </div>
+                    @endif
                 </div>
               @else
                 <div class="panel-heading">Welcome</div>
@@ -48,7 +51,7 @@ new Morris.Donut({
   element: 'most-played',
   data: [
     @foreach($stats->mostPlayed as $mostPlayed)
-    {label: "{{ $mostPlayed->Player_Most_Games }}", value: {{ $mostPlayed->Most_Games_Played }}},
+      {label: "{{ $mostPlayed->Player_Most_Games }}", value: {{ $mostPlayed->Most_Games_Played }}},
     @endforeach
   ]
 });
@@ -62,7 +65,7 @@ new Morris.Donut({
   element: 'total-victory-points',
   data: [
     @foreach($stats->mostVP as $mostVP)
-    {label: "{{ $mostVP->Player_Most_Vp }}", value: {{ $mostVP->Most_Total_Vp }}},
+      {label: "{{ $mostVP->Player_Most_Vp }}", value: {{ $mostVP->Most_Total_Vp }}},
     @endforeach
   ]
 });

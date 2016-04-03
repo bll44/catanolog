@@ -1,0 +1,21 @@
+body {
+  font-family: 'Lato';
+}
+
+.fa-btn {
+  margin-right: 6px;
+}
+
+span.over-under {
+  position: relative;
+  top: 1em;
+  display: inline-block;
+}
+
+span.over-under > .over {
+  display: table-row;
+}
+
+span.over-under > .under {
+  display: table-row;
+}

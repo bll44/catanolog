@@ -69,7 +69,7 @@
                     </td>
 
                     <!-- Match Delete Button -->
-                    <td>
+                    <td class="text-right">
                       <form action="/match/{{ $match->id }}" method="POST">
                         {{ csrf_field() }}
                         {{ method_field('DELETE') }}

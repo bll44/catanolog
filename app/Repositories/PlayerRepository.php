@@ -15,9 +15,9 @@ class PlayerRepository
      */
     public function forUser(User $user)
     {
-        return Player::where('user_id', $user->id)
-                    ->orderBy('created_at', 'asc')
-                    ->get();
+      return Player::where('user_id', $user->id)
+        ->orderBy('created_at', 'asc')
+        ->get();
     }
 
     /**
@@ -28,9 +28,9 @@ class PlayerRepository
      */
     public function playerDetails($name, User $user)
     {
-        return Player::where('user_id', $user->id)
-                    ->where('name', $name)
-                    ->first();
+      return Player::where('user_id', $user->id)
+        ->where('name', $name)
+        ->first();
     }
 
 }

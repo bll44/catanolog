@@ -60,7 +60,7 @@
                     </td>
 
                     <!-- Player Delete Button -->
-                    <td>
+                    <td class="text-right">
                       <form action="/player/{{ $player->id }}" method="POST">
                         {{ csrf_field() }}
                         {{ method_field('DELETE') }}

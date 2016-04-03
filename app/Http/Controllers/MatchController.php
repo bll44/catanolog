@@ -108,9 +108,11 @@ class MatchController extends Controller
     $match = new \stdClass;
     $match->details = $this->matches->matchDetails($id, $request->user());
 
+    dd($match->details);
+
     // $match->scores = $match->details->scores->sortByDesc('victory_points');
 
-    return view('match.view', compact('match'));
+    return view('matches.view', compact('match'));
   }
 
   /**
