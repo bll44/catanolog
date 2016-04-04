@@ -41,7 +41,7 @@
       @if (count($players) > 0)
         <div class="panel panel-default">
           <div class="panel-heading">
-            Current Players
+            Players
           </div>
 
           <div class="panel-body">
@@ -75,6 +75,7 @@
               </tbody>
             </table>
           </div>
+          {!! $players->links() !!}
         </div>
       @endif
     </div>

@@ -12,7 +12,7 @@
           <!-- Display Validation Errors -->
           @include('common.errors')
 
-          @if ($scorecard)
+          @if ($player->scorecard)
             <div class="row">
               <div class="col-md-6">
                 <div class="panel panel-default">
@@ -33,7 +33,7 @@
               </div>
             </div>
 
-            @foreach ($scorecard as $value)
+            @foreach ($player->scorecard as $value)
               <div class="row">
                 @foreach ($value as $scorecard)
 
@@ -44,13 +44,12 @@
                         Average {{ $scorecard['match_size'] }} Player Match Score <br>
                         <small>
                           <span class="label label-default">
-                            First To Obtain
                             @if ($scorecard['match_size'] == 3)
                               12
                             @else
                               10
                             @endif
-                              Victory Points
+                              Point Victory
                           </span>
                         </small>
                       </div>

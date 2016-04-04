@@ -2,10 +2,6 @@
 
 namespace App\Repositories;
 
-use App\User;
-use App\Player;
-use App\Match;
-
 class MathRepository
 {
     /**
@@ -16,13 +12,15 @@ class MathRepository
      */
 
     public function decToFraction($float) {
-      // 1/2, 1/4, 1/8, 1/16, 1/3, 2/3, 3/4, 3/8, 5/8, 7/8, 3/16, 5/16, 7/16, 9/16, 11/16, 13/16, 15/16
 
       $whole = floor($float);
       $decimal = $float - $whole;
 
-      $leastCommonDenom = 48;
-      $denominators = array (2, 3, 4, 8, 16, 24, 48);
+      // $leastCommonDenom = 48;
+      // $denominators = array (2, 3, 4, 8, 16, 24, 48);
+
+      $leastCommonDenom = 4;
+      $denominators = array (2, 3, 4);
 
       $roundedDecimal = round($decimal * $leastCommonDenom) / $leastCommonDenom;
 

@@ -16,8 +16,9 @@ class MatchRepository
   public function forUser(User $user)
   {
     return Match::where('user_id', $user->id)
-      ->orderBy('created_at', 'asc')
-      ->get();
+      ->orderBy('id', 'desc')
+      // ->get();
+      ->simplePaginate(10);
   }
 
   /**
@@ -32,4 +33,5 @@ class MatchRepository
       ->where('id', $id)
       ->first();
   }
+
 }

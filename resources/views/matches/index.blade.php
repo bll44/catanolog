@@ -50,7 +50,7 @@
       @if (count($matches) > 0)
         <div class="panel panel-default">
           <div class="panel-heading">
-            Current Matches
+            Matches
           </div>
 
           <div class="panel-body">
@@ -84,6 +84,7 @@
               </tbody>
             </table>
           </div>
+          {!! $matches->links() !!}
         </div>
       @endif
     </div>

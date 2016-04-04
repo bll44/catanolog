@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use DB;
+// use DB;
 use App\Match;
 use App\Player;
 use App\Score;
@@ -22,6 +22,12 @@ class MatchController extends Controller
   * @var MatchRepository
   */
   protected $matches;
+
+  /**
+  * The player repository instance.
+  *
+  * @var PlayerRepository
+  */
   protected $players;
 
   /**
@@ -100,17 +106,12 @@ class MatchController extends Controller
   /**
   * Display a specific user's match.
   *
-  * @param  Request  $request
+  * @param  $id, Request  $request
   * @return Response
   */
   public function view($id, Request $request)
   {
-    $match = new \stdClass;
-    $match->details = $this->matches->matchDetails($id, $request->user());
-
-    dd($match->details);
-
-    // $match->scores = $match->details->scores->sortByDesc('victory_points');
+    $match = $this->matches->matchDetails($id, $request->user());;
 
     return view('matches.view', compact('match'));
   }
@@ -118,8 +119,7 @@ class MatchController extends Controller
   /**
   * Destroy the given match.
   *
-  * @param  Request  $request
-  * @param  Match  $match
+  * @param  Request  $request, Match  $match
   * @return Response
   */
   public function destroy(Request $request, Match $match)

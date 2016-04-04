@@ -6,16 +6,10 @@ body {
   margin-right: 6px;
 }
 
-span.over-under {
-  position: relative;
-  top: 1em;
-  display: inline-block;
-}
-
-span.over-under > .over {
-  display: table-row;
-}
-
-span.over-under > .under {
-  display: table-row;
+#area-chart,
+#line-chart,
+#bar-chart,
+#stacked,
+#pie-chart{
+  min-height: 250px;
 }

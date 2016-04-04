@@ -32,8 +32,11 @@ class Match extends Model
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * Get the scores for a match.
+     */
     public function scores()
     {
-        return $this->hasMany(Score::class);
+        return $this->hasMany(Score::class)->orderBy('victory_points', 'desc');
     }
 }

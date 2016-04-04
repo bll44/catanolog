@@ -50,6 +50,54 @@ class StatisticsController extends Controller
   {
     $stats = new \stdClass;
 
+    for ($i = 3; $i <= 6; $i++) {
+      $playerCountAllMatches[$i] = Match::select(DB::raw('matches.id as match_id, count(scores.match_id) as player_count'))
+        ->leftJoin('scores', 'matches.id', '=', 'scores.match_id')
+        ->groupBy('matches.id')
+        ->having('player_count', '=', $i)
+        ->orderBy('victory_points', 'desc')
+        ->get();
+    }
+
+    foreach ($playerCountAllMatches as $key => $matchDetails) {
+      foreach ($matchDetails as $key => $match) {
+        $matchesPerSize[$matchDetails[$key]['player_count']][] = $matchDetails[$key]['match_id'];
+      }
+    }
+
+    foreach ($matchesPerSize as $key => $matches) {
+
+      for ($i = 1; $i <= $key; $i++) {
+
+        foreach ($matches as $value) {
+          $scorePositionMatchSize[$key][$i][] = DB::table('scores')
+            ->where('match_id', '=', $value)
+            ->orderBy('victory_points', 'desc')
+            ->skip($i - 1)
+            ->take(1)
+            ->select('victory_points')
+            ->get();
+        }
+      }
+    }
+
+    foreach ($scorePositionMatchSize as $matchPlayerSize => $value1) {
+
+      foreach ($value1 as $position => $value2) {
+
+        $avg = array_sum(array_map(
+          function($element) {
+            return $element->victory_points;
+          },
+        array_flatten($value2)));
+
+        $avgScore = $avg / count($value2);
+
+        $stats->avgScoreFor[$matchPlayerSize][$position] = $this->math->decToFraction($avgScore);
+
+      }
+    }
+
     $stats->totalMatches = DB::table('matches')->count();
 
     $stats->mostPlayed = DB::table('scores')
