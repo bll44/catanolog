@@ -10,7 +10,7 @@
 
                 <div class="panel-body">
                   {{-- Most Played --}}
-                    @if ($stats->totalMatches = 0)
+                    @if ($stats->totalMatches == 0)
                       None yet! Enter a match first.
                     @else
                       <div class="row">

@@ -59,42 +59,48 @@ class StatisticsController extends Controller
         ->get();
     }
 
+    // dd(count($playerCountAllMatches));
+
     foreach ($playerCountAllMatches as $key => $matchDetails) {
-      foreach ($matchDetails as $key => $match) {
-        $matchesPerSize[$matchDetails[$key]['player_count']][] = $matchDetails[$key]['match_id'];
+      if(count($matchDetails) > 0) {
+        foreach ($matchDetails as $key => $match) {
+          $matchesPerSize[$matchDetails[$key]['player_count']][] = $matchDetails[$key]['match_id'];
+        }
       }
     }
 
-    foreach ($matchesPerSize as $key => $matches) {
+    if (isset($matchesPerSize)) {
+      foreach ($matchesPerSize as $key => $matches) {
 
-      for ($i = 1; $i <= $key; $i++) {
+        for ($i = 1; $i <= $key; $i++) {
 
-        foreach ($matches as $value) {
-          $scorePositionMatchSize[$key][$i][] = DB::table('scores')
+          foreach ($matches as $value) {
+            $scorePositionMatchSize[$key][$i][] = DB::table('scores')
             ->where('match_id', '=', $value)
             ->orderBy('victory_points', 'desc')
             ->skip($i - 1)
             ->take(1)
             ->select('victory_points')
             ->get();
+          }
         }
       }
-    }
 
-    foreach ($scorePositionMatchSize as $matchPlayerSize => $value1) {
+      foreach ($scorePositionMatchSize as $matchPlayerSize => $value1) {
 
-      foreach ($value1 as $position => $value2) {
+        foreach ($value1 as $position => $value2) {
 
-        $avg = array_sum(array_map(
+          $avg = array_sum(array_map(
           function($element) {
             return $element->victory_points;
           },
-        array_flatten($value2)));
+          array_flatten($value2)));
 
-        $avgScore = $avg / count($value2);
+          $avgScore = $avg / count($value2);
 
-        $stats->avgScoreFor[$matchPlayerSize][$position] = $this->math->decToFraction($avgScore);
+          $stats->avgScoreFor[$matchPlayerSize][$position] = $this->math->decToFraction($avgScore);
 
+        }
       }
     }
 
