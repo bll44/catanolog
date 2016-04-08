@@ -79,13 +79,15 @@ Morris.Donut({
 Morris.Bar({
   element: 'area-chart',
   data: [
-    @foreach ($stats->avgScoreFor as $mainKey => $avgScore)
-      { y: '{{ $mainKey }} Players',
-      @foreach ($avgScore as $subKey => $score)
-      {{ $subKey }}: '{{ $score }}',
+    @if (isset($stats->avgScoreFor))
+      @foreach ($stats->avgScoreFor as $mainKey => $avgScore)
+        { y: '{{ $mainKey }} Players',
+        @foreach ($avgScore as $subKey => $score)
+        {{ $subKey }}: '{{ $score }}',
+        @endforeach
+        },
       @endforeach
-      },
-    @endforeach
+    @endif
   ],
   behaveLikeLine: false,
   xkey: 'y',
