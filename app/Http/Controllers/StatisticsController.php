@@ -53,13 +53,12 @@ class StatisticsController extends Controller
     for ($i = 3; $i <= 6; $i++) {
       $playerCountAllMatches[$i] = Match::select(DB::raw('matches.id as match_id, count(scores.match_id) as player_count'))
         ->leftJoin('scores', 'matches.id', '=', 'scores.match_id')
+        ->where('matches.user_id', '=', $request->user()->id)
         ->groupBy('matches.id')
         ->having('player_count', '=', $i)
         ->orderBy('victory_points', 'desc')
         ->get();
     }
-
-    // dd(count($playerCountAllMatches));
 
     foreach ($playerCountAllMatches as $key => $matchDetails) {
       if(count($matchDetails) > 0) {
@@ -104,10 +103,13 @@ class StatisticsController extends Controller
       }
     }
 
-    $stats->totalMatches = DB::table('matches')->count();
+    $stats->totalMatches = DB::table('matches')
+    ->where('matches.user_id', '=', $request->user()->id)
+    ->count();
 
     $stats->mostPlayed = DB::table('scores')
       ->join('players', 'players.id', '=', 'scores.player_id')
+      ->where('players.user_id', '=', $request->user()->id)
       ->select(DB::raw('players.name AS Player_Most_Games, count(scores.match_id) AS Most_Games_Played'))
       ->groupBy('Player_Most_Games')
       ->orderBy('Most_Games_Played', 'desc')
@@ -116,6 +118,7 @@ class StatisticsController extends Controller
 
     $stats->mostVP = DB::table('scores')
       ->join('players', 'players.id', '=', 'scores.player_id')
+      ->where('players.user_id', '=', $request->user()->id)
       ->select(DB::raw('players.name AS Player_Most_Vp, sum(scores.victory_points) AS Most_Total_Vp'))
       ->groupBy('Player_Most_Vp')
       ->orderBy('Most_Total_Vp', 'desc')
@@ -124,6 +127,7 @@ class StatisticsController extends Controller
 
     $stats->avgVP10 = DB::table('scores')
       ->join('matches', 'matches.id', '=', 'scores.match_id')
+      ->where('matches.user_id', '=', $request->user()->id)
       ->where('matches.maximum_victory_points', '=', 10)
       ->avg('victory_points');
 
