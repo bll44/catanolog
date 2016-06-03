@@ -107,11 +107,11 @@ class MatchController extends Controller
   		&& $request->file('match_photo')->isValid())
   	{
   		$photo = new Photo;
-  		$photo->setAttributes($match);
   		$photo->setFile($request->file('match_photo'));
+  		$photo->setAttributes($match);
   		$photo->moveFile();
-      var_export($photo);
-  		// $request->file('match_photo')->move($destinationPath, $photo->filename);
+  		$photo->create(['match_id' => $photo->match_id,
+  						'filename' => $photo->destinationDir.'/'.$photo->filename]);
   	}
 
   	return redirect('/matches');

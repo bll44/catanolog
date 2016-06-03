@@ -44,5 +44,6 @@ Route::group(['middleware' => ['web']], function () {
 });
 
 Route::get('test', function() {
+	$match = App\Match::find(8);
 	return storage_path() . env('PHOTO_STORAGE_DIR');
 });
