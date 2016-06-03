@@ -42,3 +42,7 @@ Route::group(['middleware' => ['web']], function () {
 	Route::auth();
 
 });
+
+Route::get('test', function() {
+	return storage_path() . env('PHOTO_STORAGE_DIR');
+});

@@ -110,7 +110,7 @@ class MatchController extends Controller
   		$photo->setAttributes($match);
   		$photo->setFile($request->file('match_photo'));
   		$photo->moveFile();
-  		var_export($photo);
+      var_export($photo);
   		// $request->file('match_photo')->move($destinationPath, $photo->filename);
   	}
 
