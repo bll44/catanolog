@@ -21,7 +21,7 @@
               <label for="player-name" class="col-sm-3 control-label">Player</label>
 
               <div class="col-sm-6">
-                <input type="text" name="name" id="player-name" class="form-control" value="{{ old('player') }}">
+                <input type="text" name="name" id="player-name" class="form-control" value="{{ old('player') }}" autofocus="true">
               </div>
             </div>
 

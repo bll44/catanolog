@@ -24,21 +24,21 @@
 
 Route::group(['middleware' => ['web']], function () {
 
-    Route::get('/', 'StatisticsController@index')->name('statistics');
+	Route::get('/', 'StatisticsController@index')->name('statistics');
 
     // Matches
-    Route::get('/matches', 'MatchController@index')->name('matches');
-    Route::post('/match', 'MatchController@store')->name('match.add');
-    Route::post('/match/details', 'MatchController@storeComplete')->name('match.details');
-    Route::get('/match/{id}', 'MatchController@view')->name('match.view');
-    Route::delete('/match/{match}', 'MatchController@destroy')->name('match.destroy');
+	Route::get('/matches', 'MatchController@index')->name('matches');
+	Route::post('/match', 'MatchController@store')->name('match.add');
+	Route::post('/match/details', 'MatchController@storeComplete')->name('match.details');
+	Route::get('/match/{id}', 'MatchController@view')->name('match.view');
+	Route::delete('/match/{match}', 'MatchController@destroy')->name('match.destroy');
 
     // Players
-    Route::get('/players', 'PlayerController@index')->name('players');
-    Route::post('/player', 'PlayerController@store')->name('player.add');
-    Route::get('/player/{name}', 'PlayerController@view')->name('player.view');
-    Route::delete('/player/{player}', 'PlayerController@destroy')->name('players.destroy');
+	Route::get('/players', 'PlayerController@index')->name('players');
+	Route::post('/player', 'PlayerController@store')->name('player.add');
+	Route::get('/player/{name}', 'PlayerController@view')->name('player.view');
+	Route::delete('/player/{player}', 'PlayerController@destroy')->name('players.destroy');
 
-    Route::auth();
+	Route::auth();
 
 });
