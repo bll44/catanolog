@@ -15,6 +15,7 @@ class Photo extends Model
 		$this->setFileName($match);
 		$this->setDestinationDirectory();
 		$this->match_id = $match->id;
+		$this->url = env('PHOTO_STORAGE_DIR') . $this->filename;
 	}
 
 	public function setFileName($match)
@@ -24,7 +25,7 @@ class Photo extends Model
 
 	public function setDestinationDirectory()
 	{
-		$this->destinationDir = storage_path() . env('PHOTO_STORAGE_DIR');
+		$this->destinationDir = public_path() . env('PHOTO_STORAGE_DIR');
 	}
 
 	public function setFile($file)

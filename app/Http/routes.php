@@ -28,7 +28,7 @@ Route::group(['middleware' => ['web']], function () {
 
     // Matches
 	Route::get('/matches', 'MatchController@index')->name('matches');
-	Route::post('/match', 'MatchController@store')->name('match.add');
+	Route::get('/match', 'MatchController@store')->name('match.add');
 	Route::post('/match/details', 'MatchController@storeComplete')->name('match.details');
 	Route::get('/match/{id}', 'MatchController@view')->name('match.view');
 	Route::delete('/match/{match}', 'MatchController@destroy')->name('match.destroy');
@@ -41,9 +41,4 @@ Route::group(['middleware' => ['web']], function () {
 
 	Route::auth();
 
-});
-
-Route::get('test', function() {
-	$match = App\Match::find(8);
-	return storage_path() . env('PHOTO_STORAGE_DIR');
 });

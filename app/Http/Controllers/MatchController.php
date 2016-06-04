@@ -97,6 +97,7 @@ class MatchController extends Controller
   		$score = new Score;
   		$score->victory_points = $request->player_score[$i];
   		$score->player_id = $request->player[$i];
+  		$score->color = $request->color[$i];
   		$score->match_id = $match->id;
   		$score->save();
   	}
@@ -110,8 +111,10 @@ class MatchController extends Controller
   		$photo->setFile($request->file('match_photo'));
   		$photo->setAttributes($match);
   		$photo->moveFile();
-  		$photo->create(['match_id' => $photo->match_id,
-  						'filename' => $photo->destinationDir.'/'.$photo->filename]);
+  		$photo->create([
+  			'match_id' => $photo->match_id,
+  			'filename' => $photo->destinationDir.'/'.$photo->filename
+  			]);
   	}
 
   	return redirect('/matches');

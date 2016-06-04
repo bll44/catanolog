@@ -23,6 +23,7 @@ class CreateScoresTable extends Migration
             $table->foreign('match_id')
                 ->references('id')->on('matches')
                 ->onDelete('cascade');
+            $table->string('color');
             $table->timestamps();
         });
     }
