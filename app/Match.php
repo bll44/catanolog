@@ -39,4 +39,9 @@ class Match extends Model
     {
         return $this->hasMany(Score::class)->orderBy('victory_points', 'desc');
     }
+
+    public function photo()
+    {
+        return $this->hasOne(Photo::class);
+    }
 }
