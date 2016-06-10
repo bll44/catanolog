@@ -84,6 +84,7 @@ class MatchController extends Controller
   */
   public function storeComplete(Request $request)
   {
+
   	$this->validate($request, [
   		'maximum_victory_points' => 'required|numeric',
   		]);
@@ -107,13 +108,13 @@ class MatchController extends Controller
   	if($request->hasFile('match_photo') 
   		&& $request->file('match_photo')->isValid())
   	{
-  		$photo = new Photo;
-  		$photo->setFile($request->file('match_photo'));
+  		$photo = new Photo($request->file('match_photo'));
   		$photo->setAttributes($match);
   		$photo->moveFile();
   		$photo->create([
   			'match_id' => $photo->match_id,
-  			'filename' => $photo->destinationDir.'/'.$photo->filename
+  			'filename' => $photo->destinationDir.'/'.$photo->filename,
+        'url' => $photo->url
   			]);
   	}
 
@@ -128,7 +129,8 @@ class MatchController extends Controller
   */
   public function view($id, Request $request)
   {
-  	$match = $this->matches->matchDetails($id, $request->user());;
+  	$match = $this->matches->matchDetails($id, $request->user());
+    if(is_null($match)) return redirect('/matches');
 
   	return view('matches.view', compact('match'));
   }
@@ -144,6 +146,8 @@ class MatchController extends Controller
   	$this->authorize('destroy', $match);
 
   	$match->delete();
+    $match->photo->removeFile();
+    $match->photo->delete();
 
   	return redirect('/matches');
   }

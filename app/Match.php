@@ -40,8 +40,11 @@ class Match extends Model
         return $this->hasMany(Score::class)->orderBy('victory_points', 'desc');
     }
 
+    /**
+     * Get the match photo
+     */
     public function photo()
     {
-        return $this->hasOne(Photo::class);
+        return $this->hasOne(Photo::class, 'match_id');
     }
 }

@@ -13,7 +13,7 @@
 				@include('common.errors')
 
 				<!-- New Match Form -->
-				<form action="{{ route('match.add') }}" method="GET" class="form-horizontal">
+				<form action="{{ route('match.add') }}" method="GET" class="form-horizontal" id="add-match-form">
 
 					<!-- Maximum Victory Point -->
 					<div class="form-group">
@@ -88,4 +88,27 @@
 		@endif
 	</div>
 </div>
+@endsection
+
+@section('javascript')
+
+<script type="text/javascript">
+
+$('#add-match-form').submit(function() {
+	// prevent default form submission
+	event.preventDefault();
+
+	var maxVictoryPoints = $('input#maximum_victory_points').val();
+	var totalPlayers = $('input#total_players').val();
+	var href = "{{ route('match.add') }}";
+	var urlParams = '?';
+	urlParams += 'maximum_victory_points=' + maxVictoryPoints;
+	urlParams += '&total_players=' + totalPlayers;
+	var completeHref = href + urlParams;
+
+	window.location.href = completeHref;
+});
+
+</script>
+
 @endsection

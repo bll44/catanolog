@@ -70,9 +70,22 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="panel panel-default">
-							<img src="{{ env('PHOTO_STORAGE_DIR') . 'match_photo_' . $match->id . '.jpg' }}">
+							<span class="pull-right"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
+							<div class="panel-body">
+								<div class="media">
+									<div class="media-left">
+										<a href="{{ $match->photo->url }}">
+											<img class="media-object" src="{{ $match->photo->url }}" alt="Match {{ $match->id }} Photo" width="64" height="64">
+										</a>
+									</div>
+									<div class="media-body">
+										<h4 class="media-heading">Match {{ $match->id }} Photo</h4>
+										Click to view a picture of the final board
+									</div>
+								</div>
+							</div><!-- /.panel-body -->
 						</div>
-					</div>
+					</div><!-- /.column -->
 				</div><!-- /.row -->
 
 			</div>
