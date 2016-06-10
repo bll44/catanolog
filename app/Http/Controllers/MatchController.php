@@ -146,8 +146,7 @@ class MatchController extends Controller
   	$this->authorize('destroy', $match);
 
   	$match->delete();
-    $match->photo->removeFile();
-    $match->photo->delete();
+    if($match->photo->removeFile()) $match->photo->delete();
 
   	return redirect('/matches');
   }
