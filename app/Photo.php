@@ -21,20 +21,19 @@ class Photo extends Model
      */
 	public function setAttributes($match)
 	{
-		$this->setFileName($match);
+		$this->setBaseFilename($match);
 		$this->setDestinationDirectory();
 		$this->match_id = $match->id;
-		$this->url = env('PHOTO_STORAGE_DIR') . $this->filename;
-		$this->filename = $this->destinationDir . '/' . $this->setFilename();
+		$this->filename = $this->destinationDir . '/' . $this->baseFilename;
+		$this->url = env('PHOTO_STORAGE_DIR') . $this->baseFilename;
 	}
 
 	/**
      * Rename the picture to correspond with the match id
      */
-	public function setFilename($match)
+	public function setBaseFilename($match)
 	{
-		$this->baseFileName = 'match_photo_' . $match->id . '.' . $this->file->getClientOriginalExtension();
-		return $this->baseFilename;
+		$this->baseFilename = 'match_photo_' . $match->id . '.' . $this->file->getClientOriginalExtension();
 	}
 
 	/**
@@ -58,7 +57,7 @@ class Photo extends Model
      */
 	public function moveFile()
 	{
-		$this->file->move($this->destinationDir, $this->filename);
+		$this->file->move($this->destinationDir, $this->baseFilename);
 	}
 
 	/**

@@ -75,7 +75,7 @@
               </tbody>
             </table>
           </div>
-          {!! $players->links() !!}
+          
         </div>
       @endif
     </div>
