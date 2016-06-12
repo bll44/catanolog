@@ -10,12 +10,6 @@ class Photo extends Model
 
 	protected $fillable = ['match_id', 'filename', 'url'];
 
-	// Optionally set the file
-	public function __construct($file = null)
-	{
-		if( ! is_null($file)) $this->file = $file;
-	}
-
 	/**
      * Set attributes of the picture
      */

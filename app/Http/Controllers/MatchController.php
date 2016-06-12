@@ -108,15 +108,15 @@ class MatchController extends Controller
   	if($request->hasFile('match_photo') 
   		&& $request->file('match_photo')->isValid())
   	{
-  		$photo = new Photo($request->file('match_photo'));
+  		$photo = new Photo();
+      $photo->setFile($request->file('match_photo'));
   		$photo->setAttributes($match);
   		$photo->moveFile();
-      $photo->save();
-  		// $photo->create([
-  		// 	'match_id' => $photo->match_id,
-  		// 	'filename' => $photo->filename,
-    //     'url' => $photo->url
-  		// 	]);
+  		$photo->create([
+  			'match_id' => $photo->match_id,
+  			'filename' => $photo->filename,
+        'url' => $photo->url
+  			]);
   	}
 
   	return redirect('/matches');
