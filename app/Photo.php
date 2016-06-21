@@ -57,6 +57,19 @@ class Photo extends Model
 	/**
      * Remove the file from storage
      */
+    public function replace($file, $match)
+    {
+    	$this->removeFile();
+    	$this->delete();
+		$this->setFile($file);
+        $this->setAttributes($match);
+        $this->moveFile();
+        unset($this->file, $this->destinationDir, $this->baseFilename);
+    }	
+
+	/**
+     * Remove the file from storage
+     */
 	public function removeFile()
 	{
 		return unlink($this->filename) ? true : false;

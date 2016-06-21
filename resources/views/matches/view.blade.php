@@ -69,13 +69,17 @@
 
 				<div class="row">
 					<div class="col-md-12">
+
+						@if($match->photo)
 						<div class="panel panel-default">
-							<span class="pull-right"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
+							<a href="/match/edit/{{ $match->id }}">
+								<span class="pull-right"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
+							</a>
 							<div class="panel-body">
 								<div class="media">
 									<div class="media-left">
 										<a href="{{ $match->photo->url }}">
-											<img class="media-object" src="{{ $match->photo->url }}" alt="Match {{ $match->id }} Photo" width="64" height="64">
+											<img class="media-object" src="{{ $match->photo->url }}?{{ rand() }}" alt="Match {{ $match->id }} Photo" width="64" height="64">
 										</a>
 									</div>
 									<div class="media-body">
@@ -85,6 +89,25 @@
 								</div>
 							</div><!-- /.panel-body -->
 						</div>
+						@else
+						<div class="panel panel-default">
+							<form action="{{ route('match.updatePhoto') }}" method="post" class="form-horizontal" enctype="multipart/form-data">
+							{{ csrf_field() }}
+							<div class="panel-body">
+								<h4>Upload Photo</h4>
+								<div class="col-md-12">
+								<input type="hidden" name="is_update" value="false">
+								<input type="hidden" name="match_id" value="{{ $match->id }}">
+								<div class="form-group">
+									<input type="file" name="match_photo" class="form-control">
+								</div>
+								</div>
+								<button type="submit" class="btn btn-primary pull-right">Upload</button>
+							</div><!-- /.panel-body -->
+							</form>
+						</div><!-- /.panel -->
+						@endif
+
 					</div><!-- /.column -->
 				</div><!-- /.row -->
 

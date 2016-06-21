@@ -53,8 +53,8 @@ class MatchController extends Controller
   */
   public function index(Request $request)
   {
-  	$matches = $this->matches->forUser($request->user());
-
+  	// $matches = $this->matches->forUser($request->user());
+  	$matches = $this->matches->all();
   	return view('matches.index', compact('matches'));
   }
 
@@ -103,23 +103,64 @@ class MatchController extends Controller
   		$score->save();
   	}
 
-    // uploaded photo of Catan final board
-    // check that a file (photo) has been included as well as if it's valid
-  	if($request->hasFile('match_photo') 
-  		&& $request->file('match_photo')->isValid())
-  	{
-  		$photo = new Photo();
-      $photo->setFile($request->file('match_photo'));
-  		$photo->setAttributes($match);
-  		$photo->moveFile();
-  		$photo->create([
-  			'match_id' => $photo->match_id,
-  			'filename' => $photo->filename,
-        'url' => $photo->url
-  			]);
-  	}
+   //  // uploaded photo of Catan final board
+   //  // check that a file (photo) has been included as well as if it's valid
+  	// if($request->hasFile('match_photo') 
+  	// 	&& $request->file('match_photo')->isValid())
+  	// {
+  	// 	$photo = new Photo();
+   //    $photo->setFile($request->file('match_photo'));
+  	// 	$photo->setAttributes($match);
+  	// 	$photo->moveFile();
+  	// 	$photo->create([
+  	// 		'match_id' => $photo->match_id,
+  	// 		'filename' => $photo->filename,
+   //      'url' => $photo->url
+  	// 		]);
+  	// }
+
+    $this->storePhoto($request, $match);
 
   	return redirect('/matches');
+  }
+
+  /**
+  * Store the match photo.
+  *
+  * @param  Request  $request
+  * @return Response
+  */
+  public function storePhoto($request, $match = null)
+  {
+    if(is_null($match))
+      $match = $this->matches->matchDetails($request->match_id, $request->user());
+    // uploaded photo of Catan final board
+    // check that a file (photo) has been included as well as if it's valid
+    if($request->hasFile('match_photo')
+      && $request->file('match_photo')->isValid())
+    {
+
+      if($request->is_update == 'true')
+      {
+        $photo = $match->photo;
+        $photo->replace($request->file('match_photo'), $match);
+        return $photo->save() ? true : false;
+      }
+      else
+      {
+        $photo = new Photo();
+        $photo->setFile($request->file('match_photo'));
+        $photo->setAttributes($match);
+        $photo->moveFile();
+        return $photo->create([
+          'match_id' => $photo->match_id,
+          'filename' => $photo->filename,
+          'url' => $photo->url
+        ]) ? true : false;
+      }
+    }
+
+    return false;
   }
 
   /**
@@ -134,6 +175,18 @@ class MatchController extends Controller
     if(is_null($match)) return redirect('/matches');
 
   	return view('matches.view', compact('match'));
+  }
+
+  /**
+  * Display a specific user's match.
+  *
+  * @param  $id, Request  $request
+  * @return Response
+  */
+  public function edit($id, Request $request)
+  {
+    $match = $this->matches->matchDetails($id, $request->user());
+    return view('matches.edit', compact('match'));
   }
 
   /**
