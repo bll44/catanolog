@@ -113,4 +113,9 @@ class PlayerRepository
       ->get();
   }
 
+  public function allPlayers()
+  {
+    return Player::all();
+  }
+
 }

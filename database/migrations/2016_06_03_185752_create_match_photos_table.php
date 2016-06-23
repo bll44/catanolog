@@ -16,6 +16,7 @@ class CreateMatchPhotosTable extends Migration
             $table->increments('id');
             $table->integer('match_id');
             $table->string('filename');
+            $table->string('url');
             $table->timestamps();
         });
     }

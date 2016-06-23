@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\User;
 use App\Match;
+use DB;
 
 class MatchRepository
 {
@@ -21,6 +22,11 @@ class MatchRepository
       ->simplePaginate(10);
   }
 
+  public function all()
+  {
+    return Match::orderBy('id', 'desc')->simplePaginate(10);
+  }
+
   /**
    * Get all of the match details.
    *
@@ -29,8 +35,10 @@ class MatchRepository
    */
   public function matchDetails($id, User $user)
   {
-    return Match::where('user_id', $user->id)
-      ->where('id', $id)
+    // return Match::where('user_id', $user->id)
+    //   ->where('id', $id)
+    //   ->first();
+    return Match::where('id', $id)
       ->first();
   }
 

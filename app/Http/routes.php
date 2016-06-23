@@ -21,6 +21,7 @@
 | kernel and includes session state, CSRF protection, and more.
 |
 */
+use Illuminate\Http\Request;
 
 Route::group(['middleware' => ['web']], function () {
 
@@ -30,6 +31,13 @@ Route::group(['middleware' => ['web']], function () {
 	Route::get('/matches', 'MatchController@index')->name('matches');
 	Route::get('/match', 'MatchController@store')->name('match.add');
 	Route::post('/match/details', 'MatchController@storeComplete')->name('match.details');
+	Route::get('/match/edit/{id}', 'MatchController@edit')->name('match.edit');
+	// Route::post('/match/update_photo', 'MatchController@storePhoto')->name('match.updatePhoto');
+	Route::post('/match/update_photo', function(Request $request)
+	{
+		App::make('App\Http\Controllers\MatchController')->storePhoto($request);
+		return redirect('match/' . $request->match_id);
+	})->name('match.updatePhoto');
 	Route::get('/match/{id}', 'MatchController@view')->name('match.view');
 	Route::delete('/match/{match}', 'MatchController@destroy')->name('match.destroy');
 
