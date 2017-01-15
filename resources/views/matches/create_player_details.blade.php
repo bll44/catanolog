@@ -59,6 +59,17 @@
 				@endfor
 				<div class="panel panel-default">
 					<div class="panel-heading">
+						Notes
+					</div>
+					<div class="panel-body">
+						<div class="form-group">
+							<label for="match_notes"></label>
+							<textarea name="match_notes" id="match_notes" class="form-control col-sm-12" rows="5"></textarea>
+						</div>
+					</div>
+				</div>
+				<div class="panel panel-default">
+					<div class="panel-heading">
 						Upload Match Photo
 					</div>
 					<div class="panel-body">

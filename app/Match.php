@@ -13,7 +13,7 @@ class Match extends Model
      *
      * @var array
      */
-    protected $fillable = ['maximum_victory_points'];
+    protected $fillable = ['maximum_victory_points', 'notes'];
 
     /**
      * The attributes that should be cast to native types.

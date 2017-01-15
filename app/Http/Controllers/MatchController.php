@@ -91,6 +91,7 @@ class MatchController extends Controller
 
   	$match = $request->user()->matches()->create([
   		'maximum_victory_points' => $request->maximum_victory_points,
+      'notes' => $request->match_notes
   		]);
 
   	for ($i = 0; $i < $request->total_players; $i++)
